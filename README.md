@@ -6,6 +6,12 @@ everyday implementation, haiku for cheap, parallelizable lookups. The
 mapping is native: it lives entirely in each agent's own `model:`
 frontmatter field, not in a separate config file.
 
+## Install
+
+```bash
+claude plugin install right-model --marketplace ernestomancebo/right-model
+```
+
 ## The convention
 
 Every Claude Code subagent definition (`.claude/agents/<role>.md`) carries
