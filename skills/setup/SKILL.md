@@ -45,4 +45,19 @@ Never edit a file before this confirmation step.
 
 ## 3. Bootstrap mode (no existing roles)
 
-See Task 6.
+1. Say plainly that no agents were found, and offer this starting menu
+   (this plugin's own shipped examples): a **planning** role, an
+   **implementation** role, a **verification** role, and a
+   **lookup/research** role.
+2. Ask the person to confirm the set: keep all four, drop any, rename
+   any, or add roles the defaults don't cover.
+3. For each role in the confirmed set, call the Skill tool with
+   `right-model:suggest-model` to get a recommended tier.
+4. Create `.claude/agents/<role-name>.md` for each one: base the `tools:`
+   list and body on the matching shipped template under this plugin's
+   `agents/` directory (nearest match if the role was renamed or added),
+   set `description` to fit the role as the person described it, and set
+   `model:` to the quiz's recommendation.
+5. Report which files were created.
+
+Never create a file before step 2's confirmation of the role set.
