@@ -50,7 +50,10 @@ behavior, not a conflict to fix.
 - **`/right-model:setup`** — apply the same quiz across a whole project:
   retrofit mismatches in existing `.claude/agents/*.md` roles (showing the
   proposed changes before touching anything), or, if none exist yet,
-  bootstrap a starting set from this plugin's own example agents.
+  bootstrap a starting set from this plugin's own example agents. Either
+  way, roles that act on code (not pure read-only lookups) get a line
+  recording this project's conventions — pointed at an existing
+  `CLAUDE.md`/`AGENTS.md`, or captured by asking if neither exists.
 
 ## The `PROCESS` log line
 
