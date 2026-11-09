@@ -14,15 +14,18 @@ Glob for `.claude/agents/*.md` in the current project.
 
 ## 2. Retrofit existing roles
 
-For each `.claude/agents/<role>.md` found:
+Read every `.claude/agents/<role>.md` found — name and current `model:`
+(if the field is absent, treat current as `inherit`) — before asking
+anything.
 
-1. Read its `name` and current `model:` (if the field is absent, treat
-   current as `inherit`).
-2. Call the Skill tool with `right-model:suggest-model` for this role to
-   get a recommended tier.
-3. Record: role name, file path, current model, recommended model.
+Ask the three `right-model:suggest-model` questions once for the whole
+set: present all three questions for every role together, as one combined
+form (one row per role, three answer columns), instead of walking the
+whole quiz role by role. Score each role's answers against
+`right-model:suggest-model`'s table and record: role name, file path,
+current model, recommended model.
 
-After every role has been quizzed, build a table:
+After every role has a recommendation, build a table:
 
 | Role | Current | Recommended | Change? |
 |---|---|---|---|
@@ -51,8 +54,9 @@ Never edit a file before this confirmation step.
    **lookup/research** role.
 2. Ask the person to confirm the set: keep all four, drop any, rename
    any, or add roles the defaults don't cover.
-3. For each role in the confirmed set, call the Skill tool with
-   `right-model:suggest-model` to get a recommended tier.
+3. Ask the `right-model:suggest-model` questions once for the whole
+   confirmed set — one combined form covering every role — instead of
+   walking the quiz role by role, and score each against its table.
 4. Create `.claude/agents/<role-name>.md` for each one: base the `tools:`
    list and body on the matching shipped template under this plugin's
    `agents/` directory (nearest match if the role was renamed or added),

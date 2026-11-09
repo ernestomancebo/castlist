@@ -15,23 +15,18 @@ claude plugin install right-model --marketplace ernestomancebo/right-model
 ## The convention
 
 Every Claude Code subagent definition (`.claude/agents/<role>.md`) carries
-a `model:` field — `haiku`, `sonnet`, `opus`, or `inherit`. Pin it based on
-three questions about the role's task:
-
-| Question | Answer | Points |
-|---|---|---|
-| How costly is a wrong answer? | low / medium / high | 0 / 1 / 2 |
-| Judgment calls, or pattern-following? | pattern-following / judgment | 0 / 2 |
-| How much context does it need at once? | single file(s) / module-feature / whole repo-history | 0 / 1 / 2 |
-
-Sum the three scores:
+a `model:` field — `haiku`, `sonnet`, `opus`, or `inherit`. Pin it by
+scoring the role's task on three factors — cost of being wrong, judgment
+calls vs. pattern-following, and how much context it needs at once:
 
 - **0–1 → `haiku`** — cheap, parallelizable, low-stakes work.
 - **2–3 → `sonnet`** — everyday implementation and integration work.
 - **4–6 → `opus`** — architecture, judgment calls, high cost of being wrong.
 
-`/right-model:suggest` and `/right-model:setup` both apply this same table
-interactively, so you don't have to run it by hand.
+The exact questions and point values live in one place:
+`skills/suggest-model/SKILL.md`. `/right-model:suggest` and
+`/right-model:setup` both apply that table interactively, so you don't
+have to run it by hand.
 
 ## Example agents
 
@@ -59,22 +54,29 @@ behavior, not a conflict to fix.
 
 ## The `PROCESS` log line
 
-Append `PROCESS <role>: rounds=<n> duration=<min> model=<m>` wherever you
-already track a role's work — a PR description, a commit trailer, an issue
-comment, your tracker's notes field. This plugin doesn't assume which; the
-point is just to leave evidence of which model handled which round, so you
-can revisit your own split later with data instead of guesswork.
+Record which model handled which round of a role's work, in whatever
+format you already track that work — a PR description, a commit trailer,
+an issue comment, your tracker's notes field. Free text is fine; the point
+is just to leave evidence, so you can revisit your own split later with
+data instead of guesswork. One ready-made format, if you want one:
+
+```
+PROCESS <role>: rounds=<n> duration=<min> model=<m>
+```
 
 ## Relationship to dynamic per-dispatch routing
 
-Some Claude Code skills already choose a model per subagent dispatch,
-dynamically, from prose heuristics — notably
+Some Claude Code skills choose a model per subagent dispatch, dynamically,
+from prose heuristics, with no persistent per-role file —
 `superpowers:subagent-driven-development`'s own "Model Selection" section
-(cheapest model that fits each task, escalate a tier on repeated failure,
-most capable for architecture and final review). That's the same judgment
-this plugin teaches, arrived at independently, but mechanically different:
-it picks a model fresh on every dispatch, with no persistent named role
-file.
+is the clearest example aimed at model choice itself (cheapest model that
+fits each task, escalate a tier on repeated failure, most capable for
+architecture and final review). That's the same judgment this plugin
+teaches, arrived at independently, but mechanically different: it picks a
+model fresh on every dispatch. Other skills apply similar per-invocation
+judgment to different ends — `systematic-debugging`'s iterative loop, for
+instance — but they aren't about model selection, so they're not a
+comparison point here.
 
 This plugin is for the other case: a **fixed, recurring** set of named
 roles — the same planner/implementer/verifier you invoke call after call

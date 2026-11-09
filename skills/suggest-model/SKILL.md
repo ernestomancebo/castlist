@@ -5,8 +5,10 @@ description: Recommend which model tier (haiku/sonnet/opus) a role should be pin
 
 # Suggest a model for a role
 
-Ask about the role being defined, one question at a time, waiting for an
-answer before asking the next:
+Ask about the role being defined. These three questions are independent —
+present all three together in one prompt (e.g. one AskUserQuestion call
+covering all three, or one message listing all three) rather than one at
+a time:
 
 1. **Cost of being wrong** — if this role gets something wrong, how costly
    is that: low, medium, or high?
