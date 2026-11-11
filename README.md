@@ -98,8 +98,9 @@ at all.
 
 ## Pairs with
 
-[merge-compass](https://github.com/ernestomancebo/merge-compass): review-to-release
-skills for stacked and multi-repo pull requests. Its review subagents fit this
+[clearance](https://github.com/ernestomancebo/clearance): clear every pull
+request before it lands, with review sweeps, feedback routing, merge order and
+preflight checks for stacked and multi-repo PRs. Its review subagents fit this
 plugin's `verifier` role.
 
 ## License
