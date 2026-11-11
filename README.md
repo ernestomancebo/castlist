@@ -96,6 +96,12 @@ alias (`sonnet`). Claude Code resolves the alias to the latest model in
 that tier automatically, so a new Anthropic release needs no change here
 at all.
 
+## Pairs with
+
+[merge-compass](https://github.com/ernestomancebo/merge-compass): review-to-release
+skills for stacked and multi-repo pull requests. Its review subagents fit this
+plugin's `verifier` role.
+
 ## License
 
 MIT
