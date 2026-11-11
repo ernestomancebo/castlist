@@ -96,6 +96,13 @@ alias (`sonnet`). Claude Code resolves the alias to the latest model in
 that tier automatically, so a new Anthropic release needs no change here
 at all.
 
+## Pairs with
+
+[clearance](https://github.com/ernestomancebo/clearance): clear every pull
+request before it lands, with review sweeps, feedback routing, merge order and
+preflight checks for stacked and multi-repo PRs. Its review subagents fit this
+plugin's `verifier` role.
+
 ## License
 
 MIT
