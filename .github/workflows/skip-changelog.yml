@@ -1,0 +1,32 @@
+name: skip-changelog
+
+on:
+  pull_request:
+    types: [labeled, unlabeled, edited]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  override:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const has = pr.labels.some(l => l.name === 'skip-changelog');
+            const block = /\n*BEGIN_COMMIT_OVERRIDE[\s\S]*?END_COMMIT_OVERRIDE\n*/g;
+            const body = (pr.body || '').replace(block, '').trimEnd();
+            let next = body;
+            if (has) {
+              const subject = pr.title.replace(/^\w+(\([^)]*\))?!?:\s*/, '');
+              next = `${body}\n\nBEGIN_COMMIT_OVERRIDE\nchore: ${subject}\nEND_COMMIT_OVERRIDE\n`;
+            }
+            if (next !== (pr.body || '')) {
+              await github.rest.pulls.update({
+                ...context.repo,
+                pull_number: pr.number,
+                body: next,
+              });
+            }

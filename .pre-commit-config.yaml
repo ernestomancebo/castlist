@@ -1,0 +1,34 @@
+# One-time setup:  pre-commit install   (installs both hook types below)
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-json
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.12
+    hooks:
+      - id: actionlint
+
+  # Same rules as .github/workflows/pr-title.yml, so a bad message fails
+  # locally instead of after a CI round-trip.
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.5.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: [feat, fix, perf, revert, docs, chore, ci, test, style, build, refactor]
+
+  - repo: local
+    hooks:
+      - id: subject-max-50
+        name: commit subject is at most 50 characters
+        language: pygrep
+        entry: '\A[^\n]{51,}'
+        args: [--multiline]
+        stages: [commit-msg]
