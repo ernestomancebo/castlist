@@ -11,7 +11,7 @@
       "name": "castlist",
       "source": "./",
       "description": "Per-role model routing convention for Claude Code subagents: match each role to the model tier its task actually needs.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "keywords": [
         "model-routing",
         "subagents",
