@@ -1,19 +1,31 @@
 # castlist
 
 Per-role model routing for Claude Code subagents: a cast list for your
-agents, with each role cast to the model it actually needs.
-
-A Claude Code plugin for matching each subagent role to the model it
-actually needs — opus for planning and judgment-heavy review, sonnet for
-everyday implementation, haiku for cheap, parallelizable lookups. The
-mapping is native: it lives entirely in each agent's own `model:`
-frontmatter field, not in a separate config file.
+agents, with each role cast to the model it actually needs. Opus handles
+planning and judgment-heavy review, sonnet everyday implementation, and
+haiku cheap, parallelizable lookups. The mapping lives entirely in each
+agent's own `model:` frontmatter field, not in a separate config file.
 
 ## Install
+
+Full install (recommended):
 
 ```bash
 claude plugin install castlist --marketplace ernestomancebo/castlist
 ```
+
+### Install with `npx skills`
+
+```bash
+npx skills add ernestomancebo/castlist
+```
+
+This installs the four skills only: `setup`, `catch-up`, `prune` and
+`suggest-model`, under their plain names (e.g. `setup`), not
+`/castlist:setup`. The slash-command wrappers and the example agents in
+`agents/` are not installed. Skills refer to each other as
+`castlist:<name>` in the plugin, and as plain `<name>` when installed
+this way.
 
 ### Renamed from right-model
 
