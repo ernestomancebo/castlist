@@ -127,9 +127,9 @@ since nothing about them is ever written.
 
 When called from `setup` rather than standalone, skip this skill's own
 "1. Discover" (reuse `setup`'s own role discovery) and its own "4. Build
-the table and confirm" — hand sections 2 and 3's findings back to `setup`
-instead, which merges them into its own proposed-change table and asks
+the table and confirm" — hand section 2's findings back to `setup`
+instead, which merges those into its own proposed-change table and asks
 for one combined confirmation alongside its model-tier proposals.
-Section 3's findings still get reported on their own, exactly as in
+Section 3's findings get reported on their own, exactly as in
 standalone use, after that combined confirmation (or `setup`'s
 no-roles/bootstrap path) is resolved.
