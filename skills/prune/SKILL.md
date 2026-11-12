@@ -36,7 +36,7 @@ from run to run:
    column. Exactly one clear match classifies it.
 5. **Ambiguous, no match, or a tie:** ask which archetype the role is
    (options: the archetype names from `archetypes.md`; "Other" for a new
-   one). After the confirmation in section 5, record the answer in
+   one). After the confirmation in section 4, record the answer in
    `.claude/right-model.json` so later runs don't ask again. Never guess,
    and never propose an edit to a role whose archetype was guessed.
 
