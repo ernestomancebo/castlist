@@ -1,0 +1,18 @@
+{
+  "description": "Bootstrap where the person describes one role that plans and implements.",
+  "command": "setup",
+  "answers": [
+    "role set: add a custom role 'builder' described as 'plans and implements features'",
+    "split: yes"
+  ],
+  "expect": {
+    "proposals": [
+      {
+        "role": "builder",
+        "kinds": [
+          "split-offer"
+        ]
+      }
+    ]
+  }
+}

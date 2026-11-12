@@ -1,0 +1,33 @@
+{
+  "description": "A verifier told to root-cause and fix bugs, with no debugger role to own that.",
+  "command": "prune",
+  "answers": [
+    "apply",
+    "haiku-tier quiz answers for the new debugger: low cost, judgment, module/feature"
+  ],
+  "expect": {
+    "proposals": [
+      {
+        "role": "verifier",
+        "kinds": [
+          "prune"
+        ]
+      },
+      {
+        "role": "debugger",
+        "kinds": [
+          "new-agent"
+        ]
+      }
+    ],
+    "files_created": [
+      ".claude/agents/debugger.md"
+    ],
+    "files_changed": [
+      ".claude/agents/verifier.md"
+    ],
+    "files_unchanged": [
+      ".claude/agents/implementer.md"
+    ]
+  }
+}

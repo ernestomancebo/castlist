@@ -1,0 +1,25 @@
+{
+  "description": "A vaguely described role that cannot be classified; asked once, then remembered.",
+  "command": "prune",
+  "answers": [
+    "lookup",
+    "apply"
+  ],
+  "expect": {
+    "proposals": [
+      {
+        "role": "triager",
+        "kinds": [
+          "classification-question"
+        ]
+      }
+    ],
+    "files_created": [
+      ".claude/castlist.json"
+    ]
+  },
+  "second_run": {
+    "proposals": [],
+    "questions": 0
+  }
+}

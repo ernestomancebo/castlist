@@ -20,3 +20,17 @@ Never edit the version in `.claude-plugin/plugin.json` or
   [pre-commit](https://pre-commit.com) and Go for `yamlfmt`). It checks JSON, formats YAML,
   lints workflow files on commit, and applies the same commit-message
   rules (conventional type, 50-character subject) locally.
+
+## Running tests
+
+```bash
+uv run --with pytest --with pyyaml pytest
+```
+
+This runs the deterministic repo checks: every skill, command, and agent
+frontmatter parses as strict YAML, the plugin and marketplace versions agree
+with the release manifest, the starter templates in
+`skills/prune/archetypes.md` match `agents/*.md`, and every `castlist:<name>`
+and `section N` reference resolves. CI runs the same command, including one
+check that `npx skills` lists every skill; `pre-commit` runs everything except
+that network check (`-m "not network"`).
