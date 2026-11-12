@@ -1,32 +1,28 @@
-"""Fixture projects must be well-formed, so a future eval runner can trust them.
+"""Fixture projects must be well-formed, so the eval runner can trust them.
 
 tests/fixtures/<case>/
   project/        a copy-ready scratch project (.claude/agents/*.md, CLAUDE.md, ...)
-  expected.json   what a correct run must produce (graded on files, not wording)
+  expected.json   covers + steps (prompt, scripted answers, expected outcomes)
 """
 
+import fnmatch
 import json
 from pathlib import Path
 
 import pytest
 
-from helpers import ROOT, frontmatter, rel
+from helpers import ROOT, frontmatter, rel, tracked_files
 
 FIXTURES = ROOT / "tests" / "fixtures"
 CASES = sorted(p for p in FIXTURES.iterdir() if p.is_dir())
 
-COMMANDS = {"prune", "setup"}
-KINDS = {
-    "prune",
-    "rehome",
-    "new-agent",
-    "scoped-pointer",
-    "classification-question",
-    "split-offer",
-}
+KINDS = {"prune", "rehome", "new-agent", "scoped-pointer", "classification-question", "split-offer"}
 # Roles proposed for creation / bootstrap don't exist in project/ yet.
 ROLE_NOT_ON_DISK = {"new-agent", "split-offer"}
-FILE_LISTS = ("files_created", "files_changed", "files_unchanged")
+FILE_LISTS = ("files_created", "files_changed", "files_unchanged", "files_absent")
+EXPECT_KEYS = set(FILE_LISTS) | {"file_assertions", "questions", "proposals", "exact"}
+WHEN_KEYS = {"header", "question", "text"}
+ASSERTION_KEYS = {"path", "contains", "not_contains", "json_has"}
 
 
 def test_fixtures_exist():
@@ -41,46 +37,57 @@ def test_fixture_well_formed(case):
     spec = json.loads(spec_path.read_text())
 
     assert str(spec.get("description", "")).strip(), f"{case.name}: description missing"
-    assert spec.get("command") in COMMANDS, f"{case.name}: command must be one of {sorted(COMMANDS)}"
-    answers = spec.get("answers")
-    assert isinstance(answers, list) and all(isinstance(a, str) for a in answers), (
-        f"{case.name}: answers must be a list of strings"
-    )
+    assert isinstance(spec.get("gating", True), bool), f"{case.name}: gating must be a bool"
 
-    expect = spec.get("expect")
-    assert isinstance(expect, dict), f"{case.name}: expect missing"
-    assert isinstance(expect.get("proposals"), list), f"{case.name}: expect.proposals must be a list"
+    covers = spec.get("covers")
+    assert isinstance(covers, list) and covers, f"{case.name}: covers must be a non-empty list"
+    tracked = [rel(p) for p in tracked_files()]
+    for glob in covers:
+        assert any(fnmatch.fnmatchcase(t, glob) for t in tracked), (
+            f"{case.name}: covers glob {glob!r} matches no tracked file"
+        )
+
+    steps = spec.get("steps")
+    assert isinstance(steps, list) and steps, f"{case.name}: steps must be a non-empty list"
 
     agents_dir = case / "project" / ".claude" / "agents"
-    on_disk = {p.stem for p in agents_dir.glob("*.md")} if agents_dir.is_dir() else set()
-    for agent in agents_dir.glob("*.md") if agents_dir.is_dir() else []:
+    agent_files = list(agents_dir.glob("*.md")) if agents_dir.is_dir() else []
+    on_disk = {p.stem for p in agent_files}
+    for agent in agent_files:
         assert frontmatter(agent).get("name") == agent.stem, f"{rel(agent)}: name != file stem"
 
-    for proposal in expect["proposals"]:
-        kinds = proposal.get("kinds")
-        assert isinstance(kinds, list) and kinds and set(kinds) <= KINDS, (
-            f"{case.name}: proposal kinds must be a non-empty subset of {sorted(KINDS)}: {proposal}"
+    for index, step in enumerate(steps):
+        where = f"{case.name} step {index + 1}"
+        assert str(step.get("prompt", "")).startswith("/castlist:"), (
+            f"{where}: prompt must start with /castlist:"
         )
-        assert isinstance(proposal.get("role"), str) and proposal["role"], (
-            f"{case.name}: proposal needs a role: {proposal}"
-        )
-        if not set(kinds) <= ROLE_NOT_ON_DISK:
-            assert proposal["role"] in on_disk, (
-                f"{case.name}: role {proposal['role']!r} has no project/.claude/agents/ file"
-            )
+        for rule in step.get("answers", []):
+            assert set(rule.get("when", {})) <= WHEN_KEYS, f"{where}: bad `when` keys in {rule}"
+            select = rule.get("select")
+            assert isinstance(select, (str, list)) and select, f"{where}: rule needs `select`: {rule}"
 
-    for key in FILE_LISTS:
-        for path in expect.get(key, []):
-            assert not path.startswith("/") and ".." not in Path(path).parts, (
-                f"{case.name}: {key} paths must be relative to project/: {path}"
+        expect = step.get("expect", {})
+        assert set(expect) <= EXPECT_KEYS, f"{where}: unknown expect keys {set(expect) - EXPECT_KEYS}"
+        for key in FILE_LISTS:
+            for path in expect.get(key, []):
+                assert not path.startswith("/") and ".." not in Path(path).parts, (
+                    f"{where}: {key} paths must be relative to project/: {path}"
+                )
+        for assertion in expect.get("file_assertions", []):
+            assert set(assertion) <= ASSERTION_KEYS and "path" in assertion, (
+                f"{where}: bad file_assertion {assertion}"
             )
-    for path in expect.get("files_changed", []) + expect.get("files_unchanged", []):
-        assert (case / "project" / path).is_file(), (
-            f"{case.name}: {path} is expected to exist before the run"
-        )
-
-    second = spec.get("second_run")
-    if second is not None:
-        assert second.get("proposals") == [] and second.get("questions") == 0, (
-            f"{case.name}: second_run should expect no proposals and 0 questions"
-        )
+        for proposal in expect.get("proposals", []):
+            kinds = proposal.get("kinds")
+            assert isinstance(kinds, list) and kinds and set(kinds) <= KINDS, (
+                f"{where}: proposal kinds must be a non-empty subset of {sorted(KINDS)}: {proposal}"
+            )
+            if not set(kinds) <= ROLE_NOT_ON_DISK:
+                assert proposal.get("role") in on_disk, (
+                    f"{where}: role {proposal.get('role')!r} has no project/.claude/agents/ file"
+                )
+        if index == 0:  # later steps may rely on files earlier steps create
+            for path in expect.get("files_changed", []) + expect.get("files_unchanged", []):
+                assert (case / "project" / path).is_file(), (
+                    f"{where}: {path} is expected to exist before the run"
+                )

@@ -1,4 +1,4 @@
-# One-time setup:  pre-commit install   (installs both hook types below)
+# One-time setup:  just setup   (installs both hook types below)
 default_install_hook_types: [pre-commit, commit-msg]
 
 repos:
@@ -44,7 +44,7 @@ repos:
       - id: repo-checks
         name: repo checks (pytest)
         language: system
-        entry: uv run --with pytest --with pyyaml pytest -q -m "not network"
+        entry: just test-fast
         pass_filenames: false
         always_run: true
         stages: [pre-commit]

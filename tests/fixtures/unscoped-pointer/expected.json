@@ -1,20 +1,42 @@
 {
   "description": "A planner pointed at the whole conventions file instead of only architecture and structure.",
-  "command": "prune",
-  "answers": [
-    "apply"
+  "covers": [
+    "skills/prune/**",
+    "commands/prune.md",
+    "agents/**"
   ],
-  "expect": {
-    "proposals": [
-      {
-        "role": "planner",
-        "kinds": [
-          "scoped-pointer"
+  "steps": [
+    {
+      "prompt": "/castlist:prune",
+      "answers": [
+        {
+          "when": {},
+          "select": "Apply"
+        }
+      ],
+      "expect": {
+        "files_changed": [
+          ".claude/agents/planner.md"
+        ],
+        "file_assertions": [
+          {
+            "path": ".claude/agents/planner.md",
+            "contains": "architecture and structure conventions only"
+          },
+          {
+            "path": ".claude/agents/planner.md",
+            "not_contains": "conventions before starting"
+          }
+        ],
+        "proposals": [
+          {
+            "role": "planner",
+            "kinds": [
+              "scoped-pointer"
+            ]
+          }
         ]
       }
-    ],
-    "files_changed": [
-      ".claude/agents/planner.md"
-    ]
-  }
+    }
+  ]
 }

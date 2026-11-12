@@ -1,7 +1,7 @@
 """Deterministic checks for the castlist plugin repo.
 
 Every check here exists because something real once slipped through review.
-Run:  uv run --with pytest --with pyyaml pytest
+Run:  just test   (or just test-fast to skip the network check)
 """
 
 import json

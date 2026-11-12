@@ -1,33 +1,72 @@
 {
   "description": "A verifier told to root-cause and fix bugs, with no debugger role to own that.",
-  "command": "prune",
-  "answers": [
-    "apply",
-    "haiku-tier quiz answers for the new debugger: low cost, judgment, module/feature"
+  "covers": [
+    "skills/prune/**",
+    "commands/prune.md",
+    "agents/**"
   ],
-  "expect": {
-    "proposals": [
-      {
-        "role": "verifier",
-        "kinds": [
-          "prune"
-        ]
-      },
-      {
-        "role": "debugger",
-        "kinds": [
-          "new-agent"
+  "steps": [
+    {
+      "prompt": "/castlist:prune",
+      "answers": [
+        {
+          "when": {
+            "question": "costly"
+          },
+          "select": "Low"
+        },
+        {
+          "when": {
+            "question": "judgment"
+          },
+          "select": "Judgment"
+        },
+        {
+          "when": {
+            "question": "context"
+          },
+          "select": "Module"
+        },
+        {
+          "when": {},
+          "select": "Apply"
+        }
+      ],
+      "expect": {
+        "files_created": [
+          ".claude/agents/debugger.md"
+        ],
+        "files_changed": [
+          ".claude/agents/verifier.md"
+        ],
+        "files_unchanged": [
+          ".claude/agents/implementer.md"
+        ],
+        "file_assertions": [
+          {
+            "path": ".claude/agents/verifier.md",
+            "not_contains": "fix it"
+          },
+          {
+            "path": ".claude/agents/debugger.md",
+            "contains": "name: debugger"
+          }
+        ],
+        "proposals": [
+          {
+            "role": "verifier",
+            "kinds": [
+              "prune"
+            ]
+          },
+          {
+            "role": "debugger",
+            "kinds": [
+              "new-agent"
+            ]
+          }
         ]
       }
-    ],
-    "files_created": [
-      ".claude/agents/debugger.md"
-    ],
-    "files_changed": [
-      ".claude/agents/verifier.md"
-    ],
-    "files_unchanged": [
-      ".claude/agents/implementer.md"
-    ]
-  }
+    }
+  ]
 }
