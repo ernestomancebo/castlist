@@ -1,2 +1,3 @@
 .test-fixtures/
 .worktrees/
+__pycache__/
