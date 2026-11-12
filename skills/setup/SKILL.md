@@ -5,6 +5,8 @@ description: Walk through a project's agent roles — existing or not yet create
 
 # Set up model routing for this project
 
+Sibling skills are named `castlist:<name>` when installed as the plugin and plain `<name>` when installed with `npx skills`; use whichever is installed.
+
 ## Guided prompting
 
 Every question this skill asks the person goes through the
@@ -149,7 +151,7 @@ confirmation, since nothing about them is ever written.
 ## 3. Bootstrap mode (no existing roles)
 
 1. Say plainly that no agents were found, and offer this starting menu
-   (this plugin's own shipped examples): a **planning** role, an
+   (the starter templates in `castlist:prune`'s `archetypes.md`): a **planning** role, an
    **implementation** role, a **verification** role, and a
    **lookup/research** role.
 2. Ask the person to confirm the set: keep all four, drop any, rename
@@ -161,8 +163,8 @@ confirmation, since nothing about them is ever written.
    final set, carrying all three questions, and score each against
    its table.
 4. Create `.claude/agents/<role-name>.md` for each one: base the `tools:`
-   list and body on the matching shipped template under this plugin's
-   `agents/` directory (nearest match if the role was renamed or added),
+   list and body on the matching starter template in `castlist:prune`'s
+   `archetypes.md` ("Starter templates") (nearest match if the role was renamed or added),
    set `description` to fit the role as the person described it, set
    `model:` to the quiz's recommendation, and append "Capturing project
    conventions"'s line to the body of every role whose `tools:` list
