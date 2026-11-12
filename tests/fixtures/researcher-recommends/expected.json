@@ -10,6 +10,24 @@
       "prompt": "/castlist:prune",
       "answers": [
         {
+          "when": {
+            "option": "pattern-following"
+          },
+          "select": "Judgment"
+        },
+        {
+          "when": {
+            "option": "module"
+          },
+          "select": "Module"
+        },
+        {
+          "when": {
+            "option": "high"
+          },
+          "select": "Low"
+        },
+        {
           "when": {},
           "select": "Apply"
         }

@@ -27,6 +27,8 @@ def test_rule_matches_header_question_and_text():
     assert answers.rule_matches(QUESTION, {"when": {"header": "apply"}})
     assert answers.rule_matches(QUESTION, {"when": {"question": "four files"}})
     assert answers.rule_matches(QUESTION, {"when": {"text": "APPLY"}})
+    assert answers.rule_matches(QUESTION, {"when": {"option": "decline"}})
+    assert not answers.rule_matches(QUESTION, {"when": {"option": "split"}})
     assert not answers.rule_matches(QUESTION, {"when": {"header": "archetype"}})
     assert answers.rule_matches(QUESTION, {"when": {}}), "empty when is a catch-all"
 
@@ -112,6 +114,17 @@ def test_soft_proposals_only_warn(tmp_path):
     failures, warnings = grade.grade_step(expect, before, after, tmp_path, 0, [],
                                           ["Planner: prune the npm test line"])
     assert failures == [] and warnings == []
+
+
+def test_questions_include_checks_asked_question_text(tmp_path):
+    before = after = _tree(tmp_path, {"a.md": "x"})
+    expect = {"questions_include": ["split"]}
+    failures, _ = grade.grade_step(expect, before, after, tmp_path, 1, [], [],
+                                   ["Roles Which starting roles?"])
+    assert failures == ["no question mentioned 'split'"]
+    failures, _ = grade.grade_step(expect, before, after, tmp_path, 1, [], [],
+                                   ["Builder Split builder into two roles?"])
+    assert failures == []
 
 
 # --- selection --------------------------------------------------------------

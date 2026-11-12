@@ -11,6 +11,15 @@ a row — no skill logic changes.
 | verifying | a correctness verdict against the stated goal | debugging or root-causing, editing or fixing, rewriting, planning | `verifier` | read-only plus Bash; never Write/Edit |
 | lookup | cited factual answers | recommendations, plans, edits | `researcher` | Read, Grep, Glob only |
 
+## Concerns no archetype owns
+
+An archetype owns a concern only if it appears in its "Owns" column. Some
+concerns show up in the "Must not carry" columns but are owned by none of the
+archetypes above: debugging or root-causing a failure, security review, and
+performance profiling are examples. A line about one of these is never
+re-homed to an existing role, not even the implementer; it gets a new agent
+(see "Standard names for a new role").
+
 ## Scoped convention pointers
 
 A role that reads the project's conventions file reads only its own slice:

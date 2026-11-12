@@ -8,7 +8,8 @@ def _norm(text):
 def rule_matches(question, rule):
     """A rule's `when` keys must all match (case-insensitive substring).
 
-    `header` / `question` match those fields; `text` matches either. An empty
+    `header` / `question` match those fields; `text` matches either; `option`
+    matches any option label. An empty
     `when` matches any question (use it last, as a catch-all)."""
     when = rule.get("when", {})
     header, text = _norm(question.get("header")), _norm(question.get("question"))
@@ -17,6 +18,10 @@ def rule_matches(question, rule):
     if "question" in when and _norm(when["question"]) not in text:
         return False
     if "text" in when and _norm(when["text"]) not in header + " " + text:
+        return False
+    if "option" in when and not any(
+        _norm(when["option"]) in _norm(o.get("label")) for o in question.get("options", [])
+    ):
         return False
     return True
 

@@ -11,21 +11,21 @@
       "answers": [
         {
           "when": {
-            "question": "costly"
-          },
-          "select": "Low"
-        },
-        {
-          "when": {
-            "question": "judgment"
+            "option": "pattern-following"
           },
           "select": "Judgment"
         },
         {
           "when": {
-            "question": "context"
+            "option": "module"
           },
           "select": "Module"
+        },
+        {
+          "when": {
+            "option": "high"
+          },
+          "select": "Low"
         },
         {
           "when": {},

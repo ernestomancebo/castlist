@@ -81,6 +81,11 @@ async def run_case_once(name, spec, args, out_dir, run_no):
                     q.get("question", "") + " " + " ".join(o.get("label", "") for o in q.get("options", []))
                     for q in res.questions
                 ],
+                [
+                    q.get("header", "") + " " + q.get("question", "") + " "
+                    + " ".join(o.get("label", "") for o in q.get("options", []))
+                    for q in res.questions
+                ],
             )
             step_fail += g_fail
             step_warn += g_warn
