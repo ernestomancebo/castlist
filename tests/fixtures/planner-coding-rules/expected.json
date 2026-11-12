@@ -1,24 +1,47 @@
 {
   "description": "A planner carrying a test command and style rules, which belong to the implementer.",
-  "command": "prune",
-  "answers": [
-    "apply"
+  "covers": [
+    "skills/prune/**",
+    "commands/prune.md",
+    "agents/**"
   ],
-  "expect": {
-    "proposals": [
-      {
-        "role": "planner",
-        "kinds": [
-          "prune",
-          "rehome"
+  "steps": [
+    {
+      "prompt": "/castlist:prune",
+      "answers": [
+        {
+          "when": {},
+          "select": "Apply"
+        }
+      ],
+      "expect": {
+        "files_changed": [
+          ".claude/agents/planner.md"
+        ],
+        "file_assertions": [
+          {
+            "path": ".claude/agents/planner.md",
+            "not_contains": "npm test"
+          },
+          {
+            "path": ".claude/agents/planner.md",
+            "not_contains": "code style guide"
+          },
+          {
+            "path": ".claude/agents/planner.md",
+            "contains": "PLAN.md"
+          }
+        ],
+        "proposals": [
+          {
+            "role": "planner",
+            "kinds": [
+              "prune",
+              "rehome"
+            ]
+          }
         ]
       }
-    ],
-    "files_changed": [
-      ".claude/agents/planner.md"
-    ],
-    "files_unchanged": [
-      ".claude/agents/implementer.md"
-    ]
-  }
+    }
+  ]
 }

@@ -14,5 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v10.3.3
+      - uses: extractions/setup-just@v4
       - name: Repo checks
-        run: uv run --with pytest --with pyyaml pytest -q
+        run: just test

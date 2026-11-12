@@ -1,3 +1,4 @@
 .test-fixtures/
 .worktrees/
 __pycache__/
+tests/evals/out/

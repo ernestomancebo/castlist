@@ -1,20 +1,38 @@
 {
   "description": "A lookup role told to recommend fixes and write plans.",
-  "command": "prune",
-  "answers": [
-    "apply"
+  "covers": [
+    "skills/prune/**",
+    "commands/prune.md",
+    "agents/**"
   ],
-  "expect": {
-    "proposals": [
-      {
-        "role": "researcher",
-        "kinds": [
-          "prune"
+  "steps": [
+    {
+      "prompt": "/castlist:prune",
+      "answers": [
+        {
+          "when": {},
+          "select": "Apply"
+        }
+      ],
+      "expect": {
+        "files_changed": [
+          ".claude/agents/researcher.md"
+        ],
+        "file_assertions": [
+          {
+            "path": ".claude/agents/researcher.md",
+            "not_contains": "recommended fix"
+          }
+        ],
+        "proposals": [
+          {
+            "role": "researcher",
+            "kinds": [
+              "prune"
+            ]
+          }
         ]
       }
-    ],
-    "files_changed": [
-      ".claude/agents/researcher.md"
-    ]
-  }
+    }
+  ]
 }

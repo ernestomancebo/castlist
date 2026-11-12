@@ -1,18 +1,76 @@
 {
   "description": "Bootstrap where the person describes one role that plans and implements.",
-  "command": "setup",
-  "answers": [
-    "role set: add a custom role 'builder' described as 'plans and implements features'",
-    "split: yes"
+  "covers": [
+    "skills/setup/**",
+    "skills/prune/**",
+    "skills/catch-up/**",
+    "commands/setup.md",
+    "agents/**"
   ],
-  "expect": {
-    "proposals": [
-      {
-        "role": "builder",
-        "kinds": [
-          "split-offer"
+  "gating": false,
+  "steps": [
+    {
+      "prompt": "/castlist:setup",
+      "answers": [
+        {
+          "when": {
+            "text": "split"
+          },
+          "select": "Yes"
+        },
+        {
+          "when": {
+            "text": "role"
+          },
+          "select": [
+            "planner",
+            "implementer",
+            "verifier",
+            "researcher"
+          ]
+        },
+        {
+          "when": {
+            "text": "costly"
+          },
+          "select": "Medium"
+        },
+        {
+          "when": {
+            "text": "judgment"
+          },
+          "select": "Judgment"
+        },
+        {
+          "when": {
+            "text": "context"
+          },
+          "select": "Module"
+        },
+        {
+          "when": {
+            "text": "convention"
+          },
+          "select": "None"
+        },
+        {
+          "when": {},
+          "select": "Apply"
+        }
+      ],
+      "expect": {
+        "files_absent": [
+          ".claude/agents/builder.md"
+        ],
+        "proposals": [
+          {
+            "role": "builder",
+            "kinds": [
+              "split-offer"
+            ]
+          }
         ]
       }
-    ]
-  }
+    }
+  ]
 }

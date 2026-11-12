@@ -1,25 +1,58 @@
 {
   "description": "A vaguely described role that cannot be classified; asked once, then remembered.",
-  "command": "prune",
-  "answers": [
-    "lookup",
-    "apply"
+  "covers": [
+    "skills/prune/**",
+    "commands/prune.md",
+    "agents/**"
   ],
-  "expect": {
-    "proposals": [
-      {
-        "role": "triager",
-        "kinds": [
-          "classification-question"
+  "steps": [
+    {
+      "prompt": "/castlist:prune",
+      "answers": [
+        {
+          "when": {
+            "text": "archetype"
+          },
+          "select": "lookup"
+        },
+        {
+          "when": {},
+          "select": "Apply"
+        }
+      ],
+      "expect": {
+        "files_created": [
+          ".claude/castlist.json"
+        ],
+        "file_assertions": [
+          {
+            "path": ".claude/castlist.json",
+            "json_has": {
+              "roles": {
+                "triager": "lookup"
+              }
+            }
+          }
+        ],
+        "proposals": [
+          {
+            "role": "triager",
+            "kinds": [
+              "classification-question"
+            ]
+          }
         ]
       }
-    ],
-    "files_created": [
-      ".claude/castlist.json"
-    ]
-  },
-  "second_run": {
-    "proposals": [],
-    "questions": 0
-  }
+    },
+    {
+      "prompt": "/castlist:prune",
+      "answers": [],
+      "expect": {
+        "questions": 0,
+        "files_unchanged": [
+          ".claude/castlist.json"
+        ]
+      }
+    }
+  ]
 }
