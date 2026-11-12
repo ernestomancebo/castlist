@@ -24,8 +24,10 @@ For each qualifying role:
 **a. Convention pointer or inline text, against the project's actual files:**
 
 - If the body contains a line of the form "Read `<path>` for this
-  project's conventions before starting," check whether `<path>` still
-  exists.
+  project's conventions before starting" — or its scoped form from
+  `right-model:prune`'s `archetypes.md` ("...architecture and structure
+  conventions only," and so on) — check whether `<path>` still exists. A
+  scoped line is never itself stale for being scoped.
   - **Missing, but a different `CLAUDE.md`/`AGENTS.md`-style file now
     exists at the project root:** propose repointing the line at the new
     path — the convention didn't disappear, it just moved or got renamed.

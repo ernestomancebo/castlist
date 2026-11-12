@@ -54,8 +54,10 @@ behavior, not a conflict to fix.
   way, roles that act on code (not pure read-only lookups) get a line
   recording this project's conventions — pointed at an existing
   `CLAUDE.md`/`AGENTS.md`, or captured by asking if neither exists.
-  `setup` also runs `catch-up`'s checks as a preflight, so re-running it
-  later catches the same drift without a separate step.
+  `setup` also runs `catch-up`'s and `prune`'s checks as a preflight, so
+  re-running it later catches the same drift without a separate step.
+  Convention lines are scoped to the role's job (a planner is pointed only
+  at architecture and structure conventions, not coding style).
 - **`/right-model:catch-up`** — on demand, re-examine existing roles
   against the project's *current* state: a role body whose procedural
   claim now contradicts an installed skill's own documented convention, a
@@ -63,6 +65,15 @@ behavior, not a conflict to fix.
   showed up after a role was bootstrapped without one, and — report-only,
   never auto-applied — an installed skill whose own prose already
   recommends a model tier for a job one of your roles owns.
+- **`/right-model:prune`** — check each role for concerns that belong to a
+  different job (a planner carrying coding constraints, a verifier told to
+  debug), and propose pruning or re-homing them. If a pruned concern has no
+  owner, it proposes a new agent with a standard kebab-case name
+  (`debugger`, `code-reviewer`, …). What each role may carry is defined in
+  [`skills/prune/archetypes.md`](skills/prune/archetypes.md); a role it can't
+  classify is asked about once and remembered in
+  `.claude/right-model.json` (edit that file to reclassify; commit or ignore
+  it as you prefer).
 
 ## The `PROCESS` log line
 
