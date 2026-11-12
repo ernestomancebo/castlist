@@ -106,14 +106,24 @@ Collect every proposal from step 2 into one table:
 | Role | Found | Proposed fix |
 |---|---|---|
 
+A row whose section-2 fix is an open question — 2a's ask-once fallback
+(no `CLAUDE.md`/`AGENTS.md` at all) or 2b's ask-which-is-in-effect
+disagreement — shows that question itself as the "Proposed fix" cell
+content (e.g., "ask: which of `docs/conventions.md`, `STYLE.md` is
+actually in effect" or "ask: standards a reviewing-type role should check
+against"), not a predetermined corrected line.
+
 - **No rows:** say so plainly ("No stale conventions or contradicted
-  procedural claims found.") and stop. Do not ask for confirmation of an
-  empty set.
+  procedural claims found."), skip the confirmation, and go straight to
+  the section-3 report below. Do not ask for confirmation of an empty
+  set.
 - **One or more rows:** show the full table, then ask for confirmation
   before touching anything. Confirming once for every proposed row at
   once is sufficient — per-row confirmation is not required.
   - **Confirmed:** apply each confirmed row's proposed fix to its file.
-    Report which files changed and how.
+    If a row's proposed fix is 2a's ask-once fallback or 2b's
+    ask-which-is-in-effect question, ask it as part of this same
+    confirmed pass, not before it. Report which files changed and how.
   - **Declined:** change nothing, and say plainly that nothing was
     modified.
 

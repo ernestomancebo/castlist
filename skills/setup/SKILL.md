@@ -7,14 +7,15 @@ description: Walk through a project's agent roles — existing or not yet create
 
 ## 0. Preflight: catch up on drift
 
-Before discovering roles for the quiz below, run `right-model:catch-up`'s
-sections 2 and 3 (qualifying-role checks and the all-roles model-tier
-overlap check) against whatever `.claude/agents/*.md` files exist right
-now. Reuse this skill's own role list from "1. Discover" below rather
-than catch-up's own "1. Discover," since it would just repeat the same
-glob. If none exist yet, there's nothing to check — proceed straight to
-"1. Discover" as normal (bootstrap mode has no existing roles to have
-drifted).
+Before discovering roles for the quiz below, glob for
+`.claude/agents/*.md` and read each one's `name`, `description`,
+`tools:`, and full body — the same way `right-model:catch-up`'s own "1.
+Discover" does. Run `right-model:catch-up`'s sections 2 and 3
+(qualifying-role checks and the all-roles model-tier overlap check)
+against that same read list. "1. Discover" below reuses this same glob
+and read list rather than repeating it. If none exist yet, there's
+nothing to check — proceed straight to "1. Discover" as normal (bootstrap
+mode has no existing roles to have drifted).
 
 Hold catch-up's qualifying-role findings to merge into "2. Retrofit
 existing roles"'s own proposed-change table below, under one shared
@@ -48,7 +49,11 @@ at the project root.
   know, any style or pattern rules an implementing-type role should
   follow, any standards a reviewing-type role should check against. A
   role with a real answer gets it appended as one line to its body; a
-  role answered "none" gets no line — don't add filler.
+  role answered "none" gets no line — don't add filler. Exclude from this
+  prompt any role whose Drift fix in "2. Retrofit existing roles" below
+  is itself section 2a's ask-once fallback: that role's conventions
+  question is handled once, in the confirmed-apply pass alongside its
+  drift fix, not twice.
 
 ## 2. Retrofit existing roles
 
@@ -73,15 +78,18 @@ produced a line for this role and the file doesn't already carry one,
 "already present" when it does, and is blank for a role that doesn't
 qualify. The Drift fix column holds the preflight step's proposed fix for
 this role (a repointed or ask-once-replaced pointer, inline text
-consolidated to a pointer, or a contradicted procedural claim corrected),
-or is blank when none applies. A row counts as a proposed change when the
+consolidated to a pointer, a contradicted procedural claim corrected, or
+— when installed skills disagree with each other on the same procedural
+axis — the open question asking which is actually in effect), or is
+blank when none applies. A row counts as a proposed change when the
 model would change, a conventions line would be added, a drift fix
 applies, or any combination of the three.
 
 - **No rows propose a change:** say so plainly ("Every role already
   matches its recommended tier and conventions, with no drift found —
-  nothing to change.") and stop. Do not ask for confirmation of an empty
-  set.
+  nothing to change."), skip the confirmation, and go straight to the
+  model-tier-overlap report below. Do not ask for confirmation of an
+  empty set.
 - **One or more rows propose a change:** show the full table, then ask
   for confirmation before touching anything. Confirming once for every
   proposed row at once is sufficient — per-row confirmation is not
