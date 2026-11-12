@@ -1,0 +1,41 @@
+name: pr-title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conventional commit type
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            perf
+            revert
+            docs
+            chore
+            ci
+            test
+            style
+            build
+            refactor
+          requireScope: false
+
+      - name: Title is at most 50 characters
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          len=${#TITLE}
+          if [ "$len" -gt 50 ]; then
+            echo "::error::PR title is $len characters; the limit is 50."
+            exit 1
+          fi

@@ -112,6 +112,11 @@ request before it lands, with review sweeps, feedback routing, merge order and
 preflight checks for stacked and multi-repo PRs. Its review subagents fit this
 plugin's `verifier` role.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for commit conventions and how releases
+work.
+
 ## License
 
 MIT
