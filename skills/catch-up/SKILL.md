@@ -1,6 +1,6 @@
 ---
 name: catch-up
-description: Re-examine this project's existing .claude/agents/*.md roles against the project's current state — installed skills and CLAUDE.md/AGENTS.md — and reconcile anything that's drifted since they were created or last reconciled.
+description: Re-examine this project's existing .claude/agents/*.md roles against the project's current state — installed skills and CLAUDE.md/AGENTS.md — reconcile anything that's drifted, and flag any installed skill whose own prose already recommends a model tier for a role's job.
 ---
 
 # Catch up on drift in existing agent roles
@@ -74,7 +74,32 @@ For each qualifying role:
     them and ask the project owner which is actually in effect, instead
     of proposing a single corrected line.
 
-## 3. Build the table and confirm
+## 3. All-roles check — model tier overlap, report only
+
+For every role, qualifying or not: narrow using the role's own
+`description` as the query — the same noun/verb-overlap test as section
+2b — to the skills currently available to this session whose own prose
+recommends a model tier (`haiku`/`sonnet`/`opus`, or wording like "most
+capable model," "cheapest model that fits") for a responsibility that
+overlaps this role's own stated job. Within that narrowed set, a genuine
+recommendation is prescriptive and dispatch-oriented — it tells the
+reader which model to use for a job ("dispatch this as opus," "use the
+cheapest model that fits") — not a descriptive or historical mention of
+a real tier name ("this runs on opus" today), and not an incidental,
+unrelated use of a model-tier word (e.g., "haiku" meaning the poetry
+form is not a model-tier recommendation).
+
+For each overlap found, report it — name the skill, quote or summarize
+its model-tier guidance, name the role and its own `model:` value — and
+say plainly that right-model doesn't override another skill's own
+mechanism, so which one applies for this responsibility is the project
+owner's call.
+
+This category never produces a proposed edit. Agreement or disagreement
+between the two sources doesn't matter — a finding here is always
+reported, never auto-resolved, and never blocks or gates section 4.
+
+## 4. Build the table and confirm
 
 Collect every proposal from step 2 into one table:
 
@@ -93,3 +118,7 @@ Collect every proposal from step 2 into one table:
     modified.
 
 Never edit a file before this confirmation step.
+
+Then, regardless of the table above, list every finding from section 3 as
+its own separate report — these are never gated behind the confirmation,
+since nothing about them is ever written.
