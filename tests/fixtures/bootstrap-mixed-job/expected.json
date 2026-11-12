@@ -29,21 +29,21 @@
         },
         {
           "when": {
-            "question": "costly"
-          },
-          "select": "Medium"
-        },
-        {
-          "when": {
-            "question": "judgment"
+            "option": "pattern-following"
           },
           "select": "Judgment"
         },
         {
           "when": {
-            "question": "context"
+            "option": "module"
           },
           "select": "Module"
+        },
+        {
+          "when": {
+            "option": "high"
+          },
+          "select": "Low"
         },
         {
           "when": {},
