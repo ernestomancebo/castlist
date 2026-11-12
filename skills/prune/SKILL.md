@@ -5,6 +5,8 @@ description: Check each agent role for concerns that belong to a different job â
 
 # Prune out-of-scope concerns from agent roles
 
+Sibling skills are named `castlist:<name>` when installed as the plugin and plain `<name>` when installed with `npx skills`; use whichever is installed.
+
 Every question this skill asks goes through the AskUserQuestion tool, never
 a plain-text form.
 
@@ -53,8 +55,8 @@ against that archetype's "must not carry" column. Each finding is one of:
 - **New agent:** if no existing role owns the concern, propose a new role
   named per "Standard names for a new role" in `archetypes.md`. A name that
   collides with an existing file is skipped and reported instead. Created
-  only after confirmation: base `tools:` and body on the nearest shipped
-  template under this plugin's `agents/` directory (a read-only archetype
+  only after confirmation: base `tools:` and body on the nearest starter
+  template in `archetypes.md` ("Starter templates") (a read-only archetype
   gets no `Write`/`Edit`), write `description` from the concern, and set
   `model:` by running `castlist:suggest-model` as a guided quiz in the
   confirmed pass, not before it.

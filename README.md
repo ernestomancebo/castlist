@@ -70,6 +70,8 @@ Four generic roles ship as starting points — copy, rename, and adapt them:
 | `verifier` | opus | Reviews a change for correctness, read-only |
 | `researcher` | haiku | Answers one factual question about the repo, read-only |
 
+`setup` and `prune` carry the same starter templates in `skills/prune/archetypes.md`, so they work even when only the skills are installed (e.g. via `npx skills`).
+
 If a project already has its own agent with one of these names, Claude
 Code resolves the project-level one over this plugin's — that's expected
 behavior, not a conflict to fix.

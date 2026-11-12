@@ -5,6 +5,8 @@ description: Re-examine this project's existing .claude/agents/*.md roles agains
 
 # Catch up on drift in existing agent roles
 
+Sibling skills are named `castlist:<name>` when installed as the plugin and plain `<name>` when installed with `npx skills`; use whichever is installed.
+
 ## 1. Discover
 
 Glob for `.claude/agents/*.md` in the current project.
