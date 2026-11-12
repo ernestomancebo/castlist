@@ -7,51 +7,43 @@
     "commands/setup.md",
     "agents/**"
   ],
-  "gating": false,
   "steps": [
     {
       "prompt": "/castlist:setup",
       "answers": [
         {
           "when": {
-            "text": "split"
+            "option": "split"
           },
-          "select": "Yes"
+          "select": "Split"
         },
         {
           "when": {
-            "text": "role"
+            "question": "starting roles"
           },
           "select": [
-            "planner",
-            "implementer",
             "verifier",
-            "researcher"
+            "researcher",
+            "builder: plans and implements features"
           ]
         },
         {
           "when": {
-            "text": "costly"
+            "question": "costly"
           },
           "select": "Medium"
         },
         {
           "when": {
-            "text": "judgment"
+            "question": "judgment"
           },
           "select": "Judgment"
         },
         {
           "when": {
-            "text": "context"
+            "question": "context"
           },
           "select": "Module"
-        },
-        {
-          "when": {
-            "text": "convention"
-          },
-          "select": "None"
         },
         {
           "when": {},
@@ -59,6 +51,15 @@
         }
       ],
       "expect": {
+        "questions_include": [
+          "builder"
+        ],
+        "files_created": [
+          ".claude/agents/planner.md",
+          ".claude/agents/implementer.md",
+          ".claude/agents/verifier.md",
+          ".claude/agents/researcher.md"
+        ],
         "files_absent": [
           ".claude/agents/builder.md"
         ],

@@ -20,8 +20,8 @@ KINDS = {"prune", "rehome", "new-agent", "scoped-pointer", "classification-quest
 # Roles proposed for creation / bootstrap don't exist in project/ yet.
 ROLE_NOT_ON_DISK = {"new-agent", "split-offer"}
 FILE_LISTS = ("files_created", "files_changed", "files_unchanged", "files_absent")
-EXPECT_KEYS = set(FILE_LISTS) | {"file_assertions", "questions", "proposals", "exact"}
-WHEN_KEYS = {"header", "question", "text"}
+EXPECT_KEYS = set(FILE_LISTS) | {"file_assertions", "questions", "questions_include", "proposals", "exact"}
+WHEN_KEYS = {"header", "question", "text", "option"}
 ASSERTION_KEYS = {"path", "contains", "not_contains", "json_has"}
 
 

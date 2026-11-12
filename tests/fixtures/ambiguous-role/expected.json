@@ -11,7 +11,7 @@
       "answers": [
         {
           "when": {
-            "text": "archetype"
+            "question": "which archetype"
           },
           "select": "lookup"
         },

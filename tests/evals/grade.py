@@ -39,7 +39,7 @@ def _subset(expected, actual):
     return expected == actual
 
 
-def grade_step(expect, before, after, root, questions_asked, unmatched, texts):
+def grade_step(expect, before, after, root, questions_asked, unmatched, texts, question_texts=()):
     """Return (failures, warnings). Failures gate; warnings only report."""
     failures, warnings = [], []
     created, changed, deleted = diff(before, after)
@@ -90,6 +90,10 @@ def grade_step(expect, before, after, root, questions_asked, unmatched, texts):
         failures.append(f"expected {expect['questions']} question(s), got {questions_asked}")
     for q in unmatched:
         failures.append(f"no answer rule for question: {q!r}")
+    asked = " ".join(question_texts).casefold()
+    for fragment in expect.get("questions_include", []):
+        if fragment.casefold() not in asked:
+            failures.append(f"no question mentioned {fragment!r}")
 
     blob = " ".join(texts).casefold()
     for proposal in expect.get("proposals", []):
