@@ -3,4 +3,4 @@ description: Re-examine this project's existing agent roles against installed sk
 disable-model-invocation: true
 ---
 
-Invoke the right-model:catch-up skill and follow it exactly as presented to you.
+Invoke the castlist:catch-up skill and follow it exactly as presented to you.

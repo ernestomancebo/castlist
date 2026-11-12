@@ -1,7 +1,7 @@
 # Role archetypes
 
 The single source of truth for what each kind of role owns and must not
-carry. `right-model:prune` reads this file; to support a new archetype, add
+carry. `castlist:prune` reads this file; to support a new archetype, add
 a row — no skill logic changes.
 
 | Archetype | Owns | Must not carry | Names it matches | Tools shape |

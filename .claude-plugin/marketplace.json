@@ -1,5 +1,5 @@
 {
-  "name": "right-model-marketplace",
+  "name": "castlist-marketplace",
   "owner": {
     "name": "Ernesto Mancebo"
   },
@@ -8,7 +8,7 @@
   },
   "plugins": [
     {
-      "name": "right-model",
+      "name": "castlist",
       "source": "./",
       "description": "Per-role model routing convention for Claude Code subagents: match each role to the model tier its task actually needs.",
       "version": "0.2.0",

@@ -3,4 +3,4 @@ description: Walk through this project's agent roles (or bootstrap a starting se
 disable-model-invocation: true
 ---
 
-Invoke the right-model:setup skill and follow it exactly as presented to you.
+Invoke the castlist:setup skill and follow it exactly as presented to you.

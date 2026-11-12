@@ -1,14 +1,15 @@
 {
-  "name": "right-model",
+  "name": "castlist",
   "version": "0.2.0",
   "description": "Per-role model routing convention for Claude Code subagents: match each role to the model tier its task actually needs.",
   "author": {
     "name": "Ernesto Mancebo"
   },
-  "homepage": "https://github.com/ernestomancebo/right-model",
-  "repository": "https://github.com/ernestomancebo/right-model",
+  "homepage": "https://github.com/ernestomancebo/castlist",
+  "repository": "https://github.com/ernestomancebo/castlist",
   "license": "MIT",
   "keywords": [
+    "castlist",
     "model-routing",
     "subagents",
     "cost-optimization",

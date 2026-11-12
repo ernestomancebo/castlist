@@ -1,4 +1,7 @@
-# right-model
+# castlist
+
+Per-role model routing for Claude Code subagents: a cast list for your
+agents, with each role cast to the model it actually needs.
 
 A Claude Code plugin for matching each subagent role to the model it
 actually needs — opus for planning and judgment-heavy review, sonnet for
@@ -9,8 +12,24 @@ frontmatter field, not in a separate config file.
 ## Install
 
 ```bash
-claude plugin install right-model --marketplace ernestomancebo/right-model
+claude plugin install castlist --marketplace ernestomancebo/castlist
 ```
+
+### Renamed from right-model
+
+This plugin was called `right-model` through 0.2.x. The old name doesn't
+migrate automatically, because the plugin and marketplace names changed.
+If you installed it before:
+
+```bash
+claude plugin marketplace remove right-model-marketplace
+claude plugin marketplace add ernestomancebo/castlist
+claude plugin install castlist@castlist-marketplace
+```
+
+Then restart Claude Code. Commands are now `/castlist:setup`,
+`/castlist:catch-up`, `/castlist:prune` and `/castlist:suggest`, and the
+per-project role classification file is `.claude/castlist.json`.
 
 ## The convention
 
@@ -24,8 +43,8 @@ calls vs. pattern-following, and how much context it needs at once:
 - **4–6 → `opus`** — architecture, judgment calls, high cost of being wrong.
 
 The exact questions and point values live in one place:
-`skills/suggest-model/SKILL.md`. `/right-model:suggest` and
-`/right-model:setup` both apply that table interactively, so you don't
+`skills/suggest-model/SKILL.md`. `/castlist:suggest` and
+`/castlist:setup` both apply that table interactively, so you don't
 have to run it by hand.
 
 ## Example agents
@@ -45,9 +64,9 @@ behavior, not a conflict to fix.
 
 ## Interactive commands
 
-- **`/right-model:suggest`** — ask about one task, get one recommended tier
+- **`/castlist:suggest`** — ask about one task, get one recommended tier
   and the exact `model:` line to paste.
-- **`/right-model:setup`** — apply the same quiz across a whole project:
+- **`/castlist:setup`** — apply the same quiz across a whole project:
   retrofit mismatches in existing `.claude/agents/*.md` roles (showing the
   proposed changes before touching anything), or, if none exist yet,
   bootstrap a starting set from this plugin's own example agents. Either
@@ -58,21 +77,21 @@ behavior, not a conflict to fix.
   re-running it later catches the same drift without a separate step.
   Convention lines are scoped to the role's job (a planner is pointed only
   at architecture and structure conventions, not coding style).
-- **`/right-model:catch-up`** — on demand, re-examine existing roles
+- **`/castlist:catch-up`** — on demand, re-examine existing roles
   against the project's *current* state: a role body whose procedural
   claim now contradicts an installed skill's own documented convention, a
   conventions pointer that's gone stale, a `CLAUDE.md`/`AGENTS.md` that
   showed up after a role was bootstrapped without one, and — report-only,
   never auto-applied — an installed skill whose own prose already
   recommends a model tier for a job one of your roles owns.
-- **`/right-model:prune`** — check each role for concerns that belong to a
+- **`/castlist:prune`** — check each role for concerns that belong to a
   different job (a planner carrying coding constraints, a verifier told to
   debug), and propose pruning or re-homing them. If a pruned concern has no
   owner, it proposes a new agent with a standard kebab-case name
   (`debugger`, `code-reviewer`, …). What each role may carry is defined in
   [`skills/prune/archetypes.md`](skills/prune/archetypes.md); a role it can't
   classify is asked about once and remembered in
-  `.claude/right-model.json` (edit that file to reclassify; commit or ignore
+  `.claude/castlist.json` (edit that file to reclassify; commit or ignore
   it as you prefer).
 
 ## The `PROCESS` log line

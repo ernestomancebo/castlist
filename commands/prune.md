@@ -3,4 +3,4 @@ description: Prune concerns that belong to a different job out of this project's
 disable-model-invocation: true
 ---
 
-Invoke the right-model:prune skill and follow it exactly as presented to you.
+Invoke the castlist:prune skill and follow it exactly as presented to you.
