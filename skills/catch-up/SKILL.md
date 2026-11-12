@@ -15,7 +15,7 @@ Glob for `.claude/agents/*.md` in the current project.
 ## 2. Qualifying-role checks
 
 Apply only to a role whose `tools:` list includes `Write`, `Edit`, or
-`Bash` — the same filter `right-model:setup`'s conventions-capture step
+`Bash` — the same filter `castlist:setup`'s conventions-capture step
 uses. A pure read-only role never carries a conventions line and makes no
 procedural claims, so it has nothing in this section to drift.
 
@@ -25,14 +25,14 @@ For each qualifying role:
 
 - If the body contains a line of the form "Read `<path>` for this
   project's conventions before starting" — or its scoped form from
-  `right-model:prune`'s `archetypes.md` ("...architecture and structure
+  `castlist:prune`'s `archetypes.md` ("...architecture and structure
   conventions only," and so on) — check whether `<path>` still exists. A
   scoped line is never itself stale for being scoped.
   - **Missing, but a different `CLAUDE.md`/`AGENTS.md`-style file now
     exists at the project root:** propose repointing the line at the new
     path — the convention didn't disappear, it just moved or got renamed.
   - **Missing, and no such file exists at all:** propose falling back to
-    `right-model:setup`'s own "ask once for this project's conventions"
+    `castlist:setup`'s own "ask once for this project's conventions"
     question for this role (its "Capturing project conventions," Not-found
     path). Replace the stale pointer line with whatever that question
     produces — a fresh inline convention line for a real answer, or
@@ -93,7 +93,7 @@ form is not a model-tier recommendation).
 
 For each overlap found, report it — name the skill, quote or summarize
 its model-tier guidance, name the role and its own `model:` value — and
-say plainly that right-model doesn't override another skill's own
+say plainly that castlist doesn't override another skill's own
 mechanism, so which one applies for this responsibility is the project
 owner's call.
 
@@ -135,7 +135,7 @@ Then, regardless of the table above, list every finding from section 3 as
 its own separate report — these are never gated behind the confirmation,
 since nothing about them is ever written.
 
-## Invoked as `right-model:setup`'s preflight
+## Invoked as `castlist:setup`'s preflight
 
 When called from `setup` rather than standalone, skip this skill's own
 "1. Discover" (reuse `setup`'s own role discovery) and its own "4. Build

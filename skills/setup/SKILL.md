@@ -14,7 +14,7 @@ Walk them through it step by step:
 - **Role set (bootstrap):** one multiSelect question over the four
   starting roles; renames and additions come in through "Other".
 - **Quiz:** one AskUserQuestion call per role with the three
-  `right-model:suggest-model` questions (cost, style, context) as three
+  `castlist:suggest-model` questions (cost, style, context) as three
   questions, each with its fixed answer options. The role being asked
   about is named in the question text. Mark no option as recommended —
   the answers drive the score.
@@ -23,7 +23,7 @@ Walk them through it step by step:
   short example rule, and the person's own rule comes in through "Other".
 - **Split or classify (prune):** one AskUserQuestion per ambiguous role
   (archetype choice) or mixed-job description (split yes/no), as
-  `right-model:prune` describes.
+  `castlist:prune` describes.
 - **Confirmation:** show the proposed-change table as text first, then
   ask apply / decline through AskUserQuestion.
 
@@ -34,10 +34,10 @@ carries more than that; split across calls when needed.
 
 Before discovering roles for the quiz below, glob for
 `.claude/agents/*.md` and read each one's `name`, `description`,
-`tools:`, and full body — the same way `right-model:catch-up`'s own "1.
-Discover" does. Run `right-model:catch-up`'s sections 2 and 3
+`tools:`, and full body — the same way `castlist:catch-up`'s own "1.
+Discover" does. Run `castlist:catch-up`'s sections 2 and 3
 (qualifying-role checks and the all-roles model-tier overlap check)
-and `right-model:prune`'s sections 2 and 3 (classification and
+and `castlist:prune`'s sections 2 and 3 (classification and
 out-of-scope scan) against that same read list. "1. Discover" below reuses this same glob
 and read list rather than repeating it. If none exist yet, there's
 nothing to check — proceed straight to "1. Discover" as normal (bootstrap
@@ -47,7 +47,7 @@ Hold catch-up's qualifying-role findings and prune's findings to merge
 into "2. Retrofit existing roles"'s own proposed-change table below, under
 one shared confirmation, rather than asking for a separate one. Hold catch-up's
 all-roles model-tier findings to report on their own, exactly as
-`right-model:catch-up` does standalone, once that shared confirmation (or
+`castlist:catch-up` does standalone, once that shared confirmation (or
 the no-roles-found/bootstrap path) is resolved.
 
 ## 1. Discover
@@ -69,7 +69,7 @@ at the project root.
 
 - **Found:** note its path. Every qualifying role gets one line appended
   to its body: the scoped pointer for its archetype from
-  `right-model:prune`'s `archetypes.md` ("Scoped convention pointers"), so
+  `castlist:prune`'s `archetypes.md` ("Scoped convention pointers"), so
   a planner is pointed only at architecture and structure conventions, an
   implementer at style and pattern conventions, a verifier at the standards
   to check against. A role whose archetype can't be classified gets the
@@ -92,11 +92,11 @@ Read every `.claude/agents/<role>.md` found — name, current `model:` (if
 the field is absent, treat current as `inherit`), `tools:`, and whether it
 already carries a conventions line — before asking anything.
 
-Ask the three `right-model:suggest-model` questions per role as a guided
+Ask the three `castlist:suggest-model` questions per role as a guided
 quiz (see "Guided prompting"): one AskUserQuestion call per role carrying
 all three questions, with the role's name, current model, and tools in
 the first question's text. Score each role's answers against
-`right-model:suggest-model`'s table and record: role name, file path,
+`castlist:suggest-model`'s table and record: role name, file path,
 current model, recommended model.
 
 After every role has a recommendation, build a table:
@@ -134,7 +134,7 @@ applies, or any combination of the three.
     applies, ask that question as part of this same confirmed pass, not
     before it. For a "New agent" row, run its model quiz (see "Guided
     prompting") in this pass and create the file; record any new
-    classification in `.claude/right-model.json`. Report which files
+    classification in `.claude/castlist.json`. Report which files
     changed and how.
   - **Declined:** change nothing, and say plainly that nothing was
     modified.
@@ -154,9 +154,9 @@ confirmation, since nothing about them is ever written.
    **lookup/research** role.
 2. Ask the person to confirm the set: keep all four, drop any, rename
    any, or add roles the defaults don't cover.
-3. Call `right-model:prune`'s bootstrap entry point on the confirmed role
+3. Call `castlist:prune`'s bootstrap entry point on the confirmed role
    descriptions, so a role spanning two jobs is split before it exists,
-   then ask the `right-model:suggest-model` questions per role as a guided
+   then ask the `castlist:suggest-model` questions per role as a guided
    quiz (see "Guided prompting"): one AskUserQuestion call per role in the
    final set, carrying all three questions, and score each against
    its table.

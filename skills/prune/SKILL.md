@@ -25,7 +25,7 @@ Glob for `.claude/agents/*.md` in the current project.
 Every role, read-only ones included. First hit wins, so results are stable
 from run to run:
 
-1. **Project override:** `.claude/right-model.json`, shaped
+1. **Project override:** `.claude/castlist.json`, shaped
    `{"roles": {"<name>": "<archetype>"}}`. If the role is listed, use it.
 2. **Name match:** the role's `name` matches a "Names it matches" entry in
    `archetypes.md`.
@@ -37,10 +37,10 @@ from run to run:
 5. **Ambiguous, no match, or a tie:** ask which archetype the role is
    (options: the archetype names from `archetypes.md`; "Other" for a new
    one). After the confirmation in section 4, record the answer in
-   `.claude/right-model.json` so later runs don't ask again. Never guess,
+   `.claude/castlist.json` so later runs don't ask again. Never guess,
    and never propose an edit to a role whose archetype was guessed.
 
-To reclassify a role later, edit `.claude/right-model.json`.
+To reclassify a role later, edit `.claude/castlist.json`.
 
 ## 3. Scan for out-of-scope concerns
 
@@ -56,7 +56,7 @@ against that archetype's "must not carry" column. Each finding is one of:
   only after confirmation: base `tools:` and body on the nearest shipped
   template under this plugin's `agents/` directory (a read-only archetype
   gets no `Write`/`Edit`), write `description` from the concern, and set
-  `model:` by running `right-model:suggest-model` as a guided quiz in the
+  `model:` by running `castlist:suggest-model` as a guided quiz in the
   confirmed pass, not before it.
 
 Also check convention pointers: a pointer line on a planning, implementing,
@@ -78,19 +78,19 @@ A role that makes none of these findings produces no row.
   AskUserQuestion. One confirmation for every row is sufficient.
   - **Confirmed:** apply each row, create any new agent (running its model
     quiz now), and write any new classification to
-    `.claude/right-model.json`. Report which files changed and how.
+    `.claude/castlist.json`. Report which files changed and how.
   - **Declined:** change nothing, and say plainly that nothing was
     modified.
 
 Never edit or create a file before this confirmation.
 
-## Invoked as `right-model:setup`'s preflight
+## Invoked as `castlist:setup`'s preflight
 
 Skip this skill's own "1. Discover" (reuse `setup`'s role list) and its own
 "4. Build the table and confirm" — hand sections 2 and 3's rows back to
 `setup`, which merges them into its proposed-change table under its one
 combined confirmation. Classification answers still get written to
-`.claude/right-model.json` in that confirmed pass.
+`.claude/castlist.json` in that confirmed pass.
 
 ## Invoked for bootstrap
 
