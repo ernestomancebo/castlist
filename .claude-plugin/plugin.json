@@ -1,6 +1,6 @@
 {
   "name": "castlist",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Per-role model routing convention for Claude Code subagents: match each role to the model tier its task actually needs.",
   "author": {
     "name": "Ernesto Mancebo"
