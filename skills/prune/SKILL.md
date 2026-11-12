@@ -38,8 +38,10 @@ from run to run:
    column. Exactly one clear match classifies it.
 5. **Ambiguous, no match, or a tie:** ask which archetype the role is
    (options: the archetype names from `archetypes.md`; "Other" for a new
-   one). After the confirmation in section 4, record the answer in
-   `.claude/castlist.json` so later runs don't ask again. Never guess,
+   one). Each answer becomes its own row in section 4's table ("record
+   `<role>` as `<archetype>` in `.claude/castlist.json`"), so it is
+   written after confirmation even when the scan finds nothing to prune,
+   and later runs don't ask again. Never guess,
    and never propose an edit to a role whose archetype was guessed.
 
 To reclassify a role later, edit `.claude/castlist.json`.
@@ -51,7 +53,9 @@ against that archetype's "must not carry" column. Each finding is one of:
 
 - **Prune:** remove or trim the offending line. Quote it.
 - **Re-home:** if an existing role of the owning archetype lacks that
-  concern, add a second row moving the line there.
+  concern, add a second row moving the line there. A concern counts as
+  owned only if it is in an archetype's "Owns" column; see "Concerns no
+  archetype owns" in `archetypes.md`.
 - **New agent:** if no existing role owns the concern, propose a new role
   named per "Standard names for a new role" in `archetypes.md`. A name that
   collides with an existing file is skipped and reported instead. Created
@@ -73,7 +77,7 @@ A role that makes none of these findings produces no row.
 | Role | Found | Proposed fix |
 |---|---|---|
 
-- **No rows and nothing to record:** say so plainly ("Every role stays in
+- **No rows (no findings and no new classification):** say so plainly ("Every role stays in
   its lane — nothing to prune.") and stop. Do not ask for confirmation of
   an empty set.
 - **One or more rows:** show the table, then ask apply or decline through
