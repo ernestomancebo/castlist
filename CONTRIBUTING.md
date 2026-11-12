@@ -68,8 +68,8 @@ just eval-changed              # only cases affected by your changes vs origin/m
 
 **In CI**, the `evals` workflow runs automatically on pull requests that touch
 the assets the evals exercise (`skills/`, `commands/`, `agents/`,
-`tests/evals/`, `tests/fixtures/`) and runs only the affected cases, 2 repeats
-each. It authenticates with the `CLAUDE_CODE_OAUTH_TOKEN` repo secret (create
+`tests/evals/`, `tests/fixtures/`) and runs only the affected cases, 3 repeats
+each (2 must pass). It authenticates with the `CLAUDE_CODE_OAUTH_TOKEN` repo secret (create
 one with `claude setup-token`, then `gh secret set CLAUDE_CODE_OAUTH_TOKEN`),
 and skips with a notice when the secret isn't available, as on fork PRs. It is
 not a required check. You can also start it by hand from the Actions tab

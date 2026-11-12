@@ -21,7 +21,7 @@ on:
       repeats:
         description: Runs per case
         required: false
-        default: "2"
+        default: "3"
 
 permissions:
   contents: read
@@ -70,7 +70,7 @@ jobs:
           CLAUDE_CODE_OAUTH_TOKEN="$(printf '%s' "$CLAUDE_CODE_OAUTH_TOKEN" | tr -d '[:space:]')"
           echo "::add-mask::$CLAUDE_CODE_OAUTH_TOKEN"
           export CLAUDE_CODE_OAUTH_TOKEN
-          args=(--repeats "${INPUT_REPEATS:-2}")
+          args=(--repeats "${INPUT_REPEATS:-3}")
           if [ -n "${INPUT_CASES:-}" ]; then
             for c in $INPUT_CASES; do args+=(--case "$c"); done
           elif [ "$EVENT" = "pull_request" ]; then
