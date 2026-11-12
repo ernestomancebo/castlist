@@ -54,6 +54,15 @@ behavior, not a conflict to fix.
   way, roles that act on code (not pure read-only lookups) get a line
   recording this project's conventions — pointed at an existing
   `CLAUDE.md`/`AGENTS.md`, or captured by asking if neither exists.
+  `setup` also runs `catch-up`'s checks as a preflight, so re-running it
+  later catches the same drift without a separate step.
+- **`/right-model:catch-up`** — on demand, re-examine existing roles
+  against the project's *current* state: a role body whose procedural
+  claim now contradicts an installed skill's own documented convention, a
+  conventions pointer that's gone stale, a `CLAUDE.md`/`AGENTS.md` that
+  showed up after a role was bootstrapped without one, and — report-only,
+  never auto-applied — an installed skill whose own prose already
+  recommends a model tier for a job one of your roles owns.
 
 ## The `PROCESS` log line
 
