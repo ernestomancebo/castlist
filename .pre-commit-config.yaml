@@ -6,9 +6,13 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-json
-      - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.21.0
+    hooks:
+      - id: yamlfmt
 
   - repo: https://github.com/rhysd/actionlint
     rev: v1.7.12
