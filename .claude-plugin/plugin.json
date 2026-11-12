@@ -1,6 +1,6 @@
 {
   "name": "right-model",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Per-role model routing convention for Claude Code subagents: match each role to the model tier its task actually needs.",
   "author": {
     "name": "Ernesto Mancebo"
@@ -8,5 +8,10 @@
   "homepage": "https://github.com/ernestomancebo/right-model",
   "repository": "https://github.com/ernestomancebo/right-model",
   "license": "MIT",
-  "keywords": ["model-routing", "subagents", "cost-optimization", "claude-code-plugin"]
+  "keywords": [
+    "model-routing",
+    "subagents",
+    "cost-optimization",
+    "claude-code-plugin"
+  ]
 }
