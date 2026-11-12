@@ -1,0 +1,14 @@
+{
+  "description": "The four shipped roles; every one stays in its lane.",
+  "command": "prune",
+  "answers": [],
+  "expect": {
+    "proposals": [],
+    "files_unchanged": [
+      ".claude/agents/planner.md",
+      ".claude/agents/implementer.md",
+      ".claude/agents/verifier.md",
+      ".claude/agents/researcher.md"
+    ]
+  }
+}

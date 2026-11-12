@@ -1,0 +1,20 @@
+{
+  "description": "A planner pointed at the whole conventions file instead of only architecture and structure.",
+  "command": "prune",
+  "answers": [
+    "apply"
+  ],
+  "expect": {
+    "proposals": [
+      {
+        "role": "planner",
+        "kinds": [
+          "scoped-pointer"
+        ]
+      }
+    ],
+    "files_changed": [
+      ".claude/agents/planner.md"
+    ]
+  }
+}

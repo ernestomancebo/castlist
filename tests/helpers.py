@@ -1,5 +1,6 @@
 """Shared helpers for the repo checks. Only tracked files are inspected."""
 
+import fnmatch
 import re
 import subprocess
 from pathlib import Path
@@ -17,8 +18,13 @@ def tracked_files():
 
 
 def tracked(pattern):
-    """Tracked files whose repo-relative posix path matches a glob pattern."""
-    return sorted(p for p in tracked_files() if p.relative_to(ROOT).match(pattern))
+    """Tracked files whose repo-relative posix path matches a glob, anchored at
+    the repo root (so 'agents/*.md' never matches '.claude/agents/x.md')."""
+    return sorted(
+        p
+        for p in tracked_files()
+        if fnmatch.fnmatchcase(p.relative_to(ROOT).as_posix(), pattern)
+    )
 
 
 def rel(path):

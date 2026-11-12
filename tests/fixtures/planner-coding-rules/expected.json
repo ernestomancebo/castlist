@@ -1,0 +1,24 @@
+{
+  "description": "A planner carrying a test command and style rules, which belong to the implementer.",
+  "command": "prune",
+  "answers": [
+    "apply"
+  ],
+  "expect": {
+    "proposals": [
+      {
+        "role": "planner",
+        "kinds": [
+          "prune",
+          "rehome"
+        ]
+      }
+    ],
+    "files_changed": [
+      ".claude/agents/planner.md"
+    ],
+    "files_unchanged": [
+      ".claude/agents/implementer.md"
+    ]
+  }
+}

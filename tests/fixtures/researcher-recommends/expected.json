@@ -1,0 +1,20 @@
+{
+  "description": "A lookup role told to recommend fixes and write plans.",
+  "command": "prune",
+  "answers": [
+    "apply"
+  ],
+  "expect": {
+    "proposals": [
+      {
+        "role": "researcher",
+        "kinds": [
+          "prune"
+        ]
+      }
+    ],
+    "files_changed": [
+      ".claude/agents/researcher.md"
+    ]
+  }
+}
