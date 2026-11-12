@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Walk through a project's agent roles — existing or not yet created — quiz each one with the suggest-model heuristic, capture this project's conventions for roles that act on code, prune out-of-scope concerns from them, and fix model: mismatches and stale conventions after confirmation.
+description: Walk through a project's agent roles — existing or not yet created — quiz each one with the suggest-model heuristic, capture this project's conventions for roles that act on code, prune out-of-scope concerns from them, and fix mismatched model tiers and stale conventions after confirmation.
 ---
 
 # Set up model routing for this project
