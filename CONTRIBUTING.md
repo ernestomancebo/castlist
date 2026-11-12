@@ -65,3 +65,13 @@ just eval-changed              # only cases affected by your changes vs origin/m
 - Each case declares the files it exercises (`covers` in its `expected.json`),
   which is how `just eval-changed` picks cases.
 - Transcripts and per-run results land in `tests/evals/out/` (git-ignored).
+
+**In CI**, the `evals` workflow runs automatically on pull requests that touch
+the assets the evals exercise (`skills/`, `commands/`, `agents/`,
+`tests/evals/`, `tests/fixtures/`) and runs only the affected cases, 2 repeats
+each. It authenticates with the `CLAUDE_CODE_OAUTH_TOKEN` repo secret (create
+one with `claude setup-token`, then `gh secret set CLAUDE_CODE_OAUTH_TOKEN`),
+and skips with a notice when the secret isn't available, as on fork PRs. It is
+not a required check. You can also start it by hand from the Actions tab
+(`workflow_dispatch`) with specific cases. Transcripts are uploaded as the
+`eval-transcripts` artifact for 7 days.
