@@ -36,3 +36,15 @@ repos:
         entry: '\A[^\n]{51,}'
         args: [--multiline]
         stages: [commit-msg]
+
+  # Fast deterministic repo checks (frontmatter, manifests, template sync,
+  # cross-references). The network test runs in CI only.
+  - repo: local
+    hooks:
+      - id: repo-checks
+        name: repo checks (pytest)
+        language: system
+        entry: uv run --with pytest --with pyyaml pytest -q -m "not network"
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
