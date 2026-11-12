@@ -122,3 +122,14 @@ Never edit a file before this confirmation step.
 Then, regardless of the table above, list every finding from section 3 as
 its own separate report — these are never gated behind the confirmation,
 since nothing about them is ever written.
+
+## Invoked as `right-model:setup`'s preflight
+
+When called from `setup` rather than standalone, skip this skill's own
+"1. Discover" (reuse `setup`'s own role discovery) and its own "4. Build
+the table and confirm" — hand sections 2 and 3's findings back to `setup`
+instead, which merges them into its own proposed-change table and asks
+for one combined confirmation alongside its model-tier proposals.
+Section 3's findings still get reported on their own, exactly as in
+standalone use, after that combined confirmation (or `setup`'s
+no-roles/bootstrap path) is resolved.
