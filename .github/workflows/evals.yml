@@ -66,6 +66,10 @@ jobs:
           INPUT_CASES: ${{ inputs.cases }}
           INPUT_REPEATS: ${{ inputs.repeats }}
         run: |
+          # A token pasted from a wrapped terminal line can contain a newline.
+          CLAUDE_CODE_OAUTH_TOKEN="$(printf '%s' "$CLAUDE_CODE_OAUTH_TOKEN" | tr -d '[:space:]')"
+          echo "::add-mask::$CLAUDE_CODE_OAUTH_TOKEN"
+          export CLAUDE_CODE_OAUTH_TOKEN
           args=(--repeats "${INPUT_REPEATS:-2}")
           if [ -n "${INPUT_CASES:-}" ]; then
             for c in $INPUT_CASES; do args+=(--case "$c"); done
