@@ -195,8 +195,7 @@ def test_section_references_resolve():
 
 
 def test_no_stale_plugin_name():
-    """'right-model' may only appear in the README's rename note."""
-    allowed_section = "### Renamed from right-model"
+    """The old 'right-model' name must not appear anywhere."""
     offenders = []
     for path in tracked_files():
         if rel(path).startswith("tests/"):
@@ -205,15 +204,8 @@ def test_no_stale_plugin_name():
             text = path.read_text()
         except UnicodeDecodeError:
             continue
-        in_note = False
         for n, line in enumerate(text.splitlines(), 1):
-            if rel(path) == "README.md":
-                if line.startswith(allowed_section):
-                    in_note = True
-                    continue
-                if in_note and re.match(r"#{1,3} ", line):
-                    in_note = False
-            if "right-model" in line and not in_note:
+            if "right-model" in line:
                 offenders.append(f"{rel(path)}:{n}")
     assert not offenders, "stale 'right-model' references:\n" + "\n".join(offenders)
 
