@@ -27,22 +27,6 @@ This installs the four skills only: `setup`, `catch-up`, `prune` and
 `castlist:<name>` in the plugin, and as plain `<name>` when installed
 this way.
 
-### Renamed from right-model
-
-This plugin was called `right-model` through 0.2.x. The old name doesn't
-migrate automatically, because the plugin and marketplace names changed.
-If you installed it before:
-
-```bash
-claude plugin marketplace remove right-model-marketplace
-claude plugin marketplace add ernestomancebo/castlist
-claude plugin install castlist@castlist-marketplace
-```
-
-Then restart Claude Code. Commands are now `/castlist:setup`,
-`/castlist:catch-up`, `/castlist:prune` and `/castlist:suggest`, and the
-per-project role classification file is `.claude/castlist.json`.
-
 ## The convention
 
 Every Claude Code subagent definition (`.claude/agents/<role>.md`) carries
